@@ -16,7 +16,47 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
+        let url = NSURL(fileURLWithPath: path)
+        let filePath = url.appendingPathComponent("books_readable.json")?.path
+        let fileManager = FileManager.default
         
+        if fileManager.fileExists(atPath: filePath!) {
+            print("Ya tengo el fichero!!!")
+            //print(filePath)
+        } else {
+            print("No tenemos el fichero. Procedemos a descargarlo ...")
+            // Create destination URL
+            let documentsUrl:URL =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first as URL!
+            let destinationFileUrl = documentsUrl.appendingPathComponent("books_readable.json")
+            
+            //Create URL to the source file you want to download
+            let fileURL = URL(string: "https://t.co/K9ziV0z3SJ")
+            
+            let sessionConfig = URLSessionConfiguration.default
+            let session = URLSession(configuration: sessionConfig)
+            
+            let request = URLRequest(url:fileURL!)
+            
+            let task = session.downloadTask(with: request) { (tempLocalUrl, response, error) in
+                if let tempLocalUrl = tempLocalUrl, error == nil {
+                    // Success
+                    if let statusCode = (response as? HTTPURLResponse)?.statusCode {
+                        print("Descarga satisfactorio. Status code: \(statusCode)")
+                    }
+                    
+                    do {
+                        try FileManager.default.copyItem(at: tempLocalUrl, to: destinationFileUrl)
+                    } catch (let writeError) {
+                        print("Error creando el fichero \(destinationFileUrl) : \(writeError)")
+                    }
+                    
+                } else {
+                    print("Hubo un error durante la descarga. Error: %@", error?.localizedDescription ?? "");
+                }
+            }
+            task.resume()
+        }
         return true
     }
 
