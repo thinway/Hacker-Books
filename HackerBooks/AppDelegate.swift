@@ -28,7 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
                 //defaults.removeObject(forKey: "JsonFileDownloaded")
             
-                fileData = try loadFromStringUrl(stringUrl: "https://t.co/K9ziV0z3SJ")
+                fileData = try downloadJsonFile(fileUrlString: "https://t.co/K9ziV0z3SJ")
             
             } else {
                 print("Fichero json no descargado")
