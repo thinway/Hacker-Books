@@ -65,8 +65,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let libraryNav = UINavigationController(rootViewController: libraryVC)
             libraryNav.navigationBar.topItem?.title = "Hacker Books"
             
+            // Create a BookViewController
+            let bookVC = BookViewController(model: model.book(forTag: model.tags[0], at: 0)!)
+            
+            // Create a nav for BookViewController
+            let bookNav = UINavigationController(rootViewController: bookVC)
+            
+            // Asignamos delegados
+            libraryVC.delegate = bookVC
+            
+            // Create splitVC
+            let splitVC = UISplitViewController()
+            splitVC.viewControllers = [libraryNav, bookNav]
+            
             // Se lo agregamos a la window
-            window?.rootViewController = libraryNav
+            window?.rootViewController = splitVC
             
             // Mostrar la windows
             window?.makeKeyAndVisible()

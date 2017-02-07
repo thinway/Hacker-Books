@@ -11,7 +11,7 @@ import UIKit
 class BookViewController: UIViewController {
 
     //MARK: - Properties
-    let model : Book
+    var model : Book
     @IBOutlet weak var bookCover: UIImageView!
     
     @IBOutlet weak var favBarButton: UIBarButtonItem!
@@ -64,5 +64,15 @@ class BookViewController: UIViewController {
         
         favBarButton.title = self.model.isFavourite ? "Unfavourite" : "Favourite"
         
+    }
+}
+
+extension BookViewController : LibraryTableViewControllerDelegate {
+    
+    func libraryTableViewController(_ libraryVC: LibraryTableViewController, didSelectBook book: Book) {
+        
+        // Change the model
+        model = book
+        syncViewWithModel()
     }
 }
