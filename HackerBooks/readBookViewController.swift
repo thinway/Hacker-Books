@@ -14,7 +14,7 @@ class readBookViewController: UIViewController {
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     @IBOutlet weak var browser: UIWebView!
     
-    let model : Book
+    var model : Book
     
     //MARK: - Initialization
     init(model: Book) {
@@ -47,6 +47,12 @@ class readBookViewController: UIViewController {
         
         browser.delegate = self
         
+        subscribe()
+        
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        unsubscribe()
     }
 }
 
@@ -68,5 +74,35 @@ extension readBookViewController : UIWebViewDelegate {
         
         // Stop the spinner
         spinner.stopAnimating()
+    }
+}
+
+//MARK: - Notifications
+extension readBookViewController {
+    
+    func subscribe() {
+        // Ref. al NotificationCenter
+        let nc = NotificationCenter.default
+        
+        nc.addObserver(forName: LibraryTableViewController.notificationName, object: nil, queue: OperationQueue.main)
+        { (note: Notification) in
+            
+            // Extraigo el personaje de la notificación
+            let userInfo = note.userInfo
+            let book = userInfo?[LibraryTableViewController.bookKey]
+            
+            // cambio modelo
+            self.model = book as! Book
+            
+            // actualizo las vistas
+            self.syncViewWithModel()
+        }
+    }
+    
+    func unsubscribe() {
+        // Ref. al NotificationCenter
+        let nc = NotificationCenter.default
+        
+        nc.removeObserver(self)
     }
 }

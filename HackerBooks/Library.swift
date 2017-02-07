@@ -70,15 +70,19 @@ class Library {
         let favourite = Tag(name: "Favourite")
         
         for book in books {
-            // Check the favourite books
+            // Check favourite books
+            
             if book.isFavourite {
                 md.insert(value: book, forKey: favourite)
             }
-            
+            print(book.tags)
             for tag in book.tags {
                     md.insert(value: book, forKey: tag)
             }
+            
+            
         }
+        
         
     }
     

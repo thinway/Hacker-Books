@@ -48,15 +48,26 @@ func decode(book json: JSONDictionary) throws -> Book {
     }
     
     // Cover default image
-    let defaultCoverName = "default_cover.png"
-    guard let cover = UIImage(named: defaultCoverName) else {
-        throw BookError.unreachableResource
-    }
+    //let defaultCoverName = "default_cover.png"
+    //guard let cover = UIImage(named: defaultCoverName) else {
+    //    throw BookError.unreachableResource
+    //}
     
     // Cover URL
     guard let coverUrlString = json["image_url"] as? String,
         let coverUrl = URL(string: coverUrlString) else {
             throw BookError.wrongURLFormatJSONResource
+    }
+    
+    var image = Data()
+
+    if let coverUrlString = json["image_url"] as? String {
+        image = try getFileFrom(stringUrl: coverUrlString)
+    }else{
+        let coverDefaultUrl = "default_cover.png"
+        if let coverDefault = Bundle.main.url(forResource: coverDefaultUrl){
+            image = try! Data(contentsOf: coverDefault)
+        }
     }
     
     // Default PDF
@@ -76,7 +87,7 @@ func decode(book json: JSONDictionary) throws -> Book {
         authors: authors,
         tags: tags,
         coverUrl: coverUrl,
-        cover: cover,
+        cover: UIImage(data: image)!,
         pdfUrl: pdfUrl,
         pdf: pdf,
         isFavourite: false)
@@ -94,8 +105,13 @@ func decode(book json: JSONDictionary?) throws -> Book {
 func decodeTags(booksArray books: [Book]) -> [Tag] {
     
     var tags = [Tag]()
+    let favourite = Tag(name: "Favourite")
     
     for book in books {
+        // Check the favourite books
+        if book.isFavourite && !tags.contains(favourite) {
+            tags.append(favourite)
+        }
         for tag in book.tags {
             if !tags.contains(tag){
                 tags.append(tag)

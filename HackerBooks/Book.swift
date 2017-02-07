@@ -28,7 +28,7 @@ class Book {
     //MARK: - Stored properties
     let title       : String
     let authors     : Autores
-    let tags        : Tags
+    var tags        : Tags
     let coverUrl    : URL
     let cover       : UIImage
     let pdfUrl      : URL
@@ -104,7 +104,7 @@ extension Book : CustomStringConvertible {
     
     public var description : String {
         get {
-            return "<\(type(of:self)): \(title)>"
+            return "<\(type(of:self)): \(title) - \(tags)>"
         }
     }
 }

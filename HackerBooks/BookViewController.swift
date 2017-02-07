@@ -12,9 +12,12 @@ class BookViewController: UIViewController {
 
     //MARK: - Properties
     var model : Book
-    @IBOutlet weak var bookCover: UIImageView!
     
+    static let notificationName = Notification.Name(rawValue: "toogleFavourite")
+
+    @IBOutlet weak var bookCover: UIImageView!
     @IBOutlet weak var favBarButton: UIBarButtonItem!
+    
     //MARK: - Initialization
     
     init(model: Book) {
@@ -64,15 +67,33 @@ class BookViewController: UIViewController {
         
         favBarButton.title = self.model.isFavourite ? "Unfavourite" : "Favourite"
         
+        //print(model.tags)
+        // Se notifica que el usuario ha tocado en favorito
+        notify()
     }
 }
 
+
+extension BookViewController {
+    
+    // Notificación cuando un usuario toca el botón favorito
+    func notify() {
+        let nc = NotificationCenter.default
+        let notification = Notification(name: BookViewController.notificationName, object: self, userInfo: nil)
+        nc.post(notification)
+        
+    }
+}
+
+
+//MARK: - LibraryTableViewControllerDelegate
 extension BookViewController : LibraryTableViewControllerDelegate {
     
     func libraryTableViewController(_ libraryVC: LibraryTableViewController, didSelectBook book: Book) {
         
         // Change the model
         model = book
+        
         syncViewWithModel()
     }
 }

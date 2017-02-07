@@ -10,6 +10,10 @@ import UIKit
 
 class LibraryTableViewController: UITableViewController {
     
+    //MARK. - Constants
+    static let notificationName = Notification.Name(rawValue: "BookDidChange")
+    static let bookKey = "BookKey"
+        
     //MARK: - Properties
     let model: Library
     weak var delegate: LibraryTableViewControllerDelegate? = nil
@@ -20,7 +24,6 @@ class LibraryTableViewController: UITableViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -28,9 +31,15 @@ class LibraryTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
-        print("Tabla mostrada")
-        
+        print(model.tags)
+        subscribe()
     }
+    
+    func reload(){
+        model.loadMultiDictionary()
+        self.tableView.reloadData()
+    }
+    
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -85,17 +94,22 @@ class LibraryTableViewController: UITableViewController {
         // check what's the tag
         let tag = self.getTag(forSection: indexPath.section)
         
-        // check what's the book
-        let book = model.book(forTag: tag, at: indexPath.row)
-        
-        // Comentadas al añadir protocolo delegado
-        // Create BookViewController
-        //let bookVC = BookViewController(model: book!);
-        // Push it!!!
-        //self.navigationController?.pushViewController(bookVC, animated: true)
-        
-        // Avisar al delegado
-        delegate?.libraryTableViewController(self, didSelectBook: book!)
+    
+            // se comprueba el libro
+            if let book = model.book(forTag: tag, at: indexPath.row) {
+                if UIDevice.current.userInterfaceIdiom == .phone {
+                    // Create BookViewController
+                    let bookVC = BookViewController(model: book);
+                    //Push it!!!
+                    self.navigationController?.pushViewController(bookVC, animated: true)
+                }else {
+                    // Avisar al delegado
+                    delegate?.libraryTableViewController(self, didSelectBook: book)
+                    
+                    // mandamos una notificación
+                    notify(bookChanged: book)
+                }
+            }
         
     }
     
@@ -112,4 +126,26 @@ protocol LibraryTableViewControllerDelegate : class {
     
     func libraryTableViewController(_ libraryVC: LibraryTableViewController, didSelectBook book: Book)
     
+}
+
+
+//MARK: - Notifications
+extension LibraryTableViewController {
+    
+    func notify(bookChanged book : Book) {
+        // Creamos una instancia del NotificationCenter
+        let nc = NotificationCenter.default
+        
+        // Creas un objeto notificacion
+        let notification = Notification(name: LibraryTableViewController.notificationName, object: self, userInfo: [LibraryTableViewController.bookKey : model])
+        
+        // Se manda
+        nc.post(notification)
+    }
+    
+    func subscribe(){
+        let nc = NotificationCenter.default
+        
+        nc.addObserver(forName: BookViewController.notificationName, object: nil, queue: OperationQueue.main, using: {(note: Notification) in self.reload()})
+    }
 }

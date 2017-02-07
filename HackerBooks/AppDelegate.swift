@@ -28,24 +28,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
                 //defaults.removeObject(forKey: "JsonFileDownloaded")
             
-                fileData = try downloadJsonFile(fileUrlString: "https://t.co/K9ziV0z3SJ")
+                fileData = try downloadFile(fileUrlString: "https://t.co/K9ziV0z3SJ")
             
             } else {
                 print("Fichero json no descargado")
                 print("Descargando Fichero ...")
                 defaults.set(true, forKey: "JsonFileDownloaded")
             
-                fileData = try downloadJsonFile(fileUrlString: "https://t.co/K9ziV0z3SJ")
+                fileData = try downloadFile(fileUrlString: "https://t.co/K9ziV0z3SJ")
             }
         
             let booksJson = try jsonLoadFromData(dataInput: fileData)
             
             let books = try decodeLibrary(jsonLibrary: booksJson)
-            //print("Books: \(books)")
             let tags = decodeTags(booksArray: books)
-            //print("Tags: \(tags)")
             let model = Library(books: books, tags: tags)
-            //print("\(model.md)")
             
             var indexTag = 0
             for tag in model.tags{
@@ -68,18 +65,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // Create a BookViewController
             let bookVC = BookViewController(model: model.book(forTag: model.tags[0], at: 0)!)
             
+            
             // Create a nav for BookViewController
             let bookNav = UINavigationController(rootViewController: bookVC)
             
             // Asignamos delegados
             libraryVC.delegate = bookVC
             
-            // Create splitVC
-            let splitVC = UISplitViewController()
-            splitVC.viewControllers = [libraryNav, bookNav]
-            
-            // Se lo agregamos a la window
-            window?.rootViewController = splitVC
+            if(UIDevice.current.userInterfaceIdiom == .phone){
+                window?.rootViewController = libraryNav
+            }else{
+                // Se crea splitViewController
+                let splitVC = UISplitViewController()
+                splitVC.viewControllers = [libraryNav, bookNav]
+                
+                // Se lo agregamos a la window
+                window?.rootViewController = splitVC
+            }
             
             // Mostrar la windows
             window?.makeKeyAndVisible()
