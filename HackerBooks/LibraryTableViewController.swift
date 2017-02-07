@@ -72,6 +72,23 @@ class LibraryTableViewController: UITableViewController {
         return cell!
     }
     
+    //MARK: - Table View Delegate
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        // check what's the tag
+        let tag = self.getTag(forSection: indexPath.section)
+        
+        // check what's the book
+        let book = model.book(forTag: tag, at: indexPath.row)
+        
+        // Create BookViewController
+        let bookVC = BookViewController(model: book!);
+        
+        // Push it!!!
+        self.navigationController?.pushViewController(bookVC, animated: true)
+        
+    }
+    
     //MARK: - Utils
     func getTag(forSection section: Int) -> Tag {
         
