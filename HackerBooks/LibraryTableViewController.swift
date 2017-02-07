@@ -31,7 +31,7 @@ class LibraryTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
-        print(model.tags)
+        
         subscribe()
     }
     
@@ -137,7 +137,7 @@ extension LibraryTableViewController {
         let nc = NotificationCenter.default
         
         // Creas un objeto notificacion
-        let notification = Notification(name: LibraryTableViewController.notificationName, object: self, userInfo: [LibraryTableViewController.bookKey : model])
+        let notification = Notification(name: LibraryTableViewController.notificationName, object: self, userInfo: [LibraryTableViewController.bookKey : book])
         
         // Se manda
         nc.post(notification)

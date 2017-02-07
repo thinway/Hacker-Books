@@ -47,12 +47,6 @@ func decode(book json: JSONDictionary) throws -> Book {
         tags = Tag.toArray(str: tagsField)
     }
     
-    // Cover default image
-    //let defaultCoverName = "default_cover.png"
-    //guard let cover = UIImage(named: defaultCoverName) else {
-    //    throw BookError.unreachableResource
-    //}
-    
     // Cover URL
     guard let coverUrlString = json["image_url"] as? String,
         let coverUrl = URL(string: coverUrlString) else {

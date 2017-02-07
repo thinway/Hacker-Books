@@ -47,6 +47,7 @@ class readBookViewController: UIViewController {
         
         browser.delegate = self
         
+        // baja
         subscribe()
         
     }

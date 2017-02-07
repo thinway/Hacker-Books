@@ -41,9 +41,6 @@ func loadFromStringUrl(stringUrl sUrl: String) throws -> Data{
     }
 }
 
-//This function recieves a url string. First it confirms that the file already exists and returns a Data value.
-//If it doesn't exist, it saves it to the documents folder and returns the Data value
-public
 func getFileFrom(stringUrl sUrl: String) throws -> Data{
     if(!fileAlreadyExists(stringUrl: sUrl)){
         return try saveToLocalStorage(stringUrl: sUrl)
@@ -52,8 +49,7 @@ func getFileFrom(stringUrl sUrl: String) throws -> Data{
     }
 }
 
-//Returns the internal URL of a file
-public
+
 func getInternalUrl(file sUrl: String) throws -> URL{
     let fileName = fileNameFromStringUrl(stringUrl: sUrl)
     if let fileUrl = URL.init(string: fileName) {
@@ -62,14 +58,11 @@ func getInternalUrl(file sUrl: String) throws -> URL{
     return Bundle.main.url(forResource: "default_pdf.pdf")!
 }
 
-//Get the name of the file in the document folder. The name of a file is the url hashed
-private
+
 func fileNameFromStringUrl(stringUrl sUrl: String) -> String{
     return String(sUrl.hashValue)
 }
 
-//This function check if a file exists on the documents folder
-private
 func fileAlreadyExists(stringUrl sUrl: String) -> Bool{
     
     let fileManager = FileManager.default
@@ -88,8 +81,6 @@ func fileAlreadyExists(stringUrl sUrl: String) -> Bool{
     
 }
 
-//This function saves a file on a external url to the documents folder and returns de Data value
-private
 func saveToLocalStorage(stringUrl sUrl: String) throws -> Data{
     
     let fileData = try? Data(contentsOf: URL(string: sUrl)!)
@@ -108,8 +99,6 @@ func saveToLocalStorage(stringUrl sUrl: String) throws -> Data{
     return try dataFromStringUrl(stringUrl: sUrl)
 }
 
-//This function returns the Data value of a file that exists on the documents folder.
-private
 func dataFromStringUrl(stringUrl sUrl: String) throws -> Data{
     
     let fileManager = FileManager.default

@@ -75,7 +75,7 @@ class Library {
             if book.isFavourite {
                 md.insert(value: book, forKey: favourite)
             }
-            print(book.tags)
+            
             for tag in book.tags {
                     md.insert(value: book, forKey: tag)
             }
