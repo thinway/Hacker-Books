@@ -14,6 +14,7 @@ class BookViewController: UIViewController {
     let model : Book
     @IBOutlet weak var bookCover: UIImageView!
     
+    @IBOutlet weak var favBarButton: UIBarButtonItem!
     //MARK: - Initialization
     
     init(model: Book) {
@@ -28,20 +29,40 @@ class BookViewController: UIViewController {
 
     //MARK: - View LifeCycle
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         syncViewWithModel()
+        
+        edgesForExtendedLayout = .all
+        
     }
     
     //MARK: - Sync model -> View
     func syncViewWithModel() {
+        
         bookCover.image = model.cover
         title = model.title
+        favBarButton.title = self.model.isFavourite ? "Unfavourite" : "Favourite"
+        
     }
     
     //MARK - Actions
     @IBAction func readBook(_ sender: UIBarButtonItem) {
+        
+        // Create a readBookViewController
+        let rbVC = readBookViewController(model: model)
+        
+        navigationController?.pushViewController(rbVC, animated: true)
+        
     }
     
     @IBAction func toggleFavourite(_ sender: UIBarButtonItem) {
+        
+        let fav = self.model.isFavourite
+        
+        self.model.isFavourite = !fav
+        
+        favBarButton.title = self.model.isFavourite ? "Unfavourite" : "Favourite"
+        
     }
 }

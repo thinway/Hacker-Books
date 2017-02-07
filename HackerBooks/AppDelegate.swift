@@ -43,7 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let books = try decodeLibrary(jsonLibrary: booksJson)
             //print("Books: \(books)")
             let tags = decodeTags(booksArray: books)
-            print("Tags: \(tags)")
+            //print("Tags: \(tags)")
             let model = Library(books: books, tags: tags)
             //print("\(model.md)")
             

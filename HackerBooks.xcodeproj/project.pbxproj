@@ -27,6 +27,8 @@
 		32EB542D1E47487900EEB3E5 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32EB542C1E47487900EEB3E5 /* Tag.swift */; };
 		32F121DF1E49E8BD0036C492 /* BookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32F121DD1E49E8BD0036C492 /* BookViewController.swift */; };
 		32F121E01E49E8BD0036C492 /* BookViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32F121DE1E49E8BD0036C492 /* BookViewController.xib */; };
+		32F121E31E49F96E0036C492 /* readBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32F121E11E49F96E0036C492 /* readBookViewController.swift */; };
+		32F121E41E49F96E0036C492 /* readBookViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32F121E21E49F96E0036C492 /* readBookViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +54,8 @@
 		32EB542C1E47487900EEB3E5 /* Tag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		32F121DD1E49E8BD0036C492 /* BookViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookViewController.swift; sourceTree = "<group>"; };
 		32F121DE1E49E8BD0036C492 /* BookViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BookViewController.xib; sourceTree = "<group>"; };
+		32F121E11E49F96E0036C492 /* readBookViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = readBookViewController.swift; sourceTree = "<group>"; };
+		32F121E21E49F96E0036C492 /* readBookViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = readBookViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +119,8 @@
 				321CC11F1E491A0E000D44E9 /* LibraryTableViewController.xib */,
 				32F121DD1E49E8BD0036C492 /* BookViewController.swift */,
 				32F121DE1E49E8BD0036C492 /* BookViewController.xib */,
+				32F121E11E49F96E0036C492 /* readBookViewController.swift */,
+				32F121E21E49F96E0036C492 /* readBookViewController.xib */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -217,6 +223,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3230BC1D1E4522E400614BCB /* LaunchScreen.storyboard in Resources */,
+				32F121E41E49F96E0036C492 /* readBookViewController.xib in Resources */,
 				328FFA281E487C120083D4A3 /* default_pdf.pdf in Resources */,
 				32F121E01E49E8BD0036C492 /* BookViewController.xib in Resources */,
 				328FFA261E4872770083D4A3 /* default_cover.png in Resources */,
@@ -238,6 +245,7 @@
 				3230BC4A1E45FCE400614BCB /* MultiDictionary.swift in Sources */,
 				32EB542B1E4747FA00EEB3E5 /* Author.swift in Sources */,
 				3230BC4C1E45FEE400614BCB /* Library.swift in Sources */,
+				32F121E31E49F96E0036C492 /* readBookViewController.swift in Sources */,
 				32EB542D1E47487900EEB3E5 /* Tag.swift in Sources */,
 				321CC1201E491A0E000D44E9 /* LibraryTableViewController.swift in Sources */,
 				3230BC131E4522E400614BCB /* AppDelegate.swift in Sources */,

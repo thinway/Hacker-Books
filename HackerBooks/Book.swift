@@ -33,7 +33,7 @@ class Book {
     let cover       : UIImage
     let pdfUrl      : URL
     let pdf         : Data
-    let isFavourite : Bool
+    var isFavourite : Bool
  
     //MARK: - Initialization
     init(
