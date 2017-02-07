@@ -7,23 +7,54 @@
 //
 
 import Foundation
+import UIKit
+
+/*
+ {
+ "authors": "Scott Chacon, Ben Straub",
+ "image_url": "http://hackershelf.com/media/cache/b4/24/b42409de128aa7f1c9abbbfa549914de.jpg",
+ "pdf_url": "https://progit2.s3.amazonaws.com/en/2015-03-06-439c2/progit-en.376.pdf",
+ "tags": "version control, git",
+ "title": "Pro Git"
+ }
+ */
 
 class Book {
+
+    //MARK: - Aliases
+    typealias Autores   = [Author]
+    typealias Tags      = [Tag]
     
     //MARK: - Stored properties
-    let title   : String
-    let authors : [String]
-    let tags    : [String]
-    let imageUrl: URL
-    let pdfUrl  : URL
+    let title       : String
+    let authors     : Autores
+    let tags        : Tags
+    let coverUrl    : URL
+    let cover       : UIImage
+    let pdfUrl      : URL
+    let pdf         : Data
+    let isFavourite : Bool
  
     //MARK: - Initialization
-    init(title: String, authors: [String], tags: [String], imageUrl: URL, pdfUrl: URL) {
+    init(
+        title: String,
+        authors: Autores,
+        tags: Tags,
+        coverUrl: URL,
+        cover: UIImage,
+        pdfUrl: URL,
+        pdf: Data,
+        isFavourite: Bool) {
+        
         self.title = title
-        self.authors = authors.sorted()
-        self.tags = tags.sorted()
-        self.imageUrl = imageUrl
+        self.authors = authors
+        self.tags = tags
+        self.coverUrl = coverUrl
+        self.cover = cover
         self.pdfUrl = pdfUrl
+        self.pdf = pdf
+        self.isFavourite = isFavourite
+        
     }
     
     //MARK: - Proxies
@@ -38,11 +69,21 @@ class Book {
         for tag in tags {
             tagList += "\(tag)"
         }
-        return "\(title)\(authorList)\(tagList)\(imageUrl)\(pdfUrl)"
+        return "\(title)"
     }
     
     func proxyForComparison() -> String {
         return proxyForEquality()
+    }
+    
+    func stringTags() -> String {
+        var stringTags = ""
+        
+        for tag in tags {
+            stringTags += tag.name + " - "
+        }
+        
+        return stringTags
     }
 }
 
@@ -64,6 +105,15 @@ extension Book : CustomStringConvertible {
     public var description : String {
         get {
             return "<\(type(of:self)): \(title)>"
+        }
+    }
+}
+
+extension Book : Hashable {
+    
+    public var hashValue : Int {
+        get {
+            return proxyForEquality().hashValue
         }
     }
 }
