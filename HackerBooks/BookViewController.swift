@@ -68,7 +68,7 @@ class BookViewController: UIViewController {
         favBarButton.title = self.model.isFavourite ? "Unfavourite" : "Favourite"
         
         if( self.model.isFavourite ) {
-            let fav = Tag(name: "Favourite")
+            let fav = Tag(name: "Favourites")
             if( !model.tags.contains(fav) ){
                 model.tags.insert(fav, at: 0)
             }

@@ -68,11 +68,9 @@ func fileAlreadyExists(stringUrl sUrl: String) -> Bool{
     let fileManager = FileManager.default
     let fileName = fileNameFromStringUrl(stringUrl: sUrl)
     
-    //The documents folder url
     let docsurl = try! FileManager().url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
     let dataUrl = docsurl.appendingPathComponent(fileName)
     
-    // Check if file exists
     if fileManager.fileExists(atPath: dataUrl.path){
         return true
     } else {

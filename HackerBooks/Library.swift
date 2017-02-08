@@ -68,7 +68,7 @@ class Library {
     func loadMultiDictionary()  {
         
         self.addEmptyTags()
-        let favourite = Tag(name: "Favourite")
+        let favourite = Tag(name: "Favourites")
         
         for book in books {
             // Check favourite books
@@ -90,7 +90,7 @@ class Library {
         
         self.md = BooksMultiDictionary()
         // Busco si hay favoritos
-        let fav = Tag(name: "Favourite")
+        let fav = Tag(name: "Favourites")
         
         for book in books {
             if book.isFavourite && !tags.contains(fav) {

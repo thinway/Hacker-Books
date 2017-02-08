@@ -34,37 +34,11 @@ class LibraryTableViewController: UITableViewController {
         subscribe()
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        print("ViewDidLoad")
-        print("Key: \(model.md.keys.sorted())")
-        print("===========")
-    }
-    
     func reload(){
         
         model.loadMultiDictionary()
-        
-        /*
-        for book in model.books {
-            print("Book title: \(book.title)")
-            for tag in book.tags {
-                print("\(tag) - ")
-            }
-            print()
-        }
-         */
         self.tableView.reloadData()
-        print("Key: \(model.md.keys.sorted())")
-        print("==========")
-        for tag in model.tags{
-            print(tag)
-        }
-        print("**********")
-        for book in model.books {
-            print("Tags: \(book.tags)")
-        }
-        print("++++++++++")
+
     }
     
     // MARK: - Table view data source

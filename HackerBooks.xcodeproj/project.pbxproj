@@ -103,6 +103,8 @@
 		3230BC441E45E5D200614BCB /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				321CC11C1E48F728000D44E9 /* Utils.swift */,
+				3230BC4F1E46385F00614BCB /* Errors.swift */,
 				3230BC4D1E4633D100614BCB /* JSONProcessing.swift */,
 				3230BC451E45E5F300614BCB /* Book.swift */,
 				3230BC4B1E45FEE400614BCB /* Library.swift */,
@@ -138,8 +140,6 @@
 			isa = PBXGroup;
 			children = (
 				3230BC491E45FCE400614BCB /* MultiDictionary.swift */,
-				3230BC4F1E46385F00614BCB /* Errors.swift */,
-				321CC11C1E48F728000D44E9 /* Utils.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
