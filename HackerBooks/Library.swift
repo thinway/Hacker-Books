@@ -20,9 +20,9 @@ class Library {
     var md    : MultiDictionary<Tag, Book>
     
     init(books: Books, tags: Tags){
-        self.books = books
-        self.tags = tags
-        self.md = BooksMultiDictionary()
+        self.books  = books
+        self.tags   = tags
+        self.md     = BooksMultiDictionary()
             
         self.loadMultiDictionary()
     }
@@ -66,12 +66,12 @@ class Library {
     }
     
     func loadMultiDictionary()  {
+        
         self.addEmptyTags()
         let favourite = Tag(name: "Favourite")
         
         for book in books {
             // Check favourite books
-            
             if book.isFavourite {
                 md.insert(value: book, forKey: favourite)
             }
@@ -79,21 +79,35 @@ class Library {
             for tag in book.tags {
                     md.insert(value: book, forKey: tag)
             }
-            
-            
         }
         
-        
+        if(md[favourite]?.count == 0){
+            tags.remove(at: 0)
+        }
     }
     
     func addEmptyTags() {
+        
+        self.md = BooksMultiDictionary()
+        // Busco si hay favoritos
+        let fav = Tag(name: "Favourite")
+        
+        for book in books {
+            if book.isFavourite && !tags.contains(fav) {
+                tags.insert(fav, at: 0)
+            }
+        }
+        
         for tag in tags {
             md[tag] = Set<Book>()
         }
+        
+        
     }
     
     func tagName(tag: Tag) -> String{
         return tag.name
     }
+    
     
 }

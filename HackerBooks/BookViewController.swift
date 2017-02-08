@@ -67,7 +67,14 @@ class BookViewController: UIViewController {
         
         favBarButton.title = self.model.isFavourite ? "Unfavourite" : "Favourite"
         
-        //print(model.tags)
+        if( self.model.isFavourite ) {
+            let fav = Tag(name: "Favourite")
+            if( !model.tags.contains(fav) ){
+                model.tags.insert(fav, at: 0)
+            }
+        }else{
+            model.tags.removeFirst()
+        }
         // Se notifica que el usuario ha tocado en favorito
         notify()
     }
